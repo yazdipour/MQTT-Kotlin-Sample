@@ -36,7 +36,7 @@ class MqttHandler {
     }
 
     fun publishMessage(topic: String, msg: String, qos: Int = 1): IMqttDeliveryToken? {
-        if (isConnected) return null
+        if (!isConnected) return null
         val encodedPayload = msg.toByteArray(charset("UTF-8"))
         val message = MqttMessage(encodedPayload)
         message.id = 5866

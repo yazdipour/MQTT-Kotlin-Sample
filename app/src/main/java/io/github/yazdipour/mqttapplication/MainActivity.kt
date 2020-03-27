@@ -39,11 +39,11 @@ class MainActivity : AppCompatActivity() {
 
                     override fun messageArrived(topic: String, mqttMessage: MqttMessage) {
                         val msg = String(mqttMessage.payload)
-                        logIt(">> $topic: $msg")
+                        logIt("Received<< $topic: $msg")
                     }
 
                     override fun deliveryComplete(iMqttDeliveryToken: IMqttDeliveryToken) {
-                        logIt("deliveryComplete: ${iMqttDeliveryToken.message}")
+                        logIt("Delivered>> ${iMqttDeliveryToken.message}")
                     }
                 })
         }
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 txtTopic.text.toString(),
                 object : IMqttActionListener {
                     override fun onSuccess(p0: IMqttToken?) {
-                        logIt("Subscribed to ${txtTopic.text} Successfully: $p0")
+                        logIt("Subscribed to ${txtTopic.text}")
                     }
 
                     override fun onFailure(p0: IMqttToken?, p1: Throwable?) {
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
                 txtTopic.text.toString(),
                 object : IMqttActionListener {
                     override fun onSuccess(p0: IMqttToken?) {
-                        logIt("Unsubscribed to ${txtTopic.text} Successfully")
+                        logIt("Unsubscribed ${txtTopic.text}")
                     }
 
                     override fun onFailure(p0: IMqttToken?, p1: Throwable?) {
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btn_pub).setOnClickListener {
             try {
                 val t = mqtt.publishMessage(txtTopic.text.toString(), txtMsg.text.toString())
-                logIt("Publish: ${t?.message}")
+                logIt("Published: ${t?.message}")
             } catch (e: Exception) {
                 logIt("Publish Error: ${e.message}")
             }
